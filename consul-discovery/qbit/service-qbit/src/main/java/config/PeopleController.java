@@ -1,6 +1,8 @@
 package config;
 
 import com.google.common.collect.Lists;
+import io.advantageous.consul.discovery.ConsulServiceDiscoveryBuilder;
+import io.advantageous.qbit.service.discovery.ServiceDiscovery;
 import model.Person;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,13 +22,21 @@ public class PeopleController {
 
     private String serviceName = "MyService";
     private String serviceId = "demo_service_" + System.getProperty("server.port");
+    private ServiceDiscovery clientAgent;
 
     @PostConstruct
     public void init() throws Exception {
-//        Consul consul = Consul.newClient("localhost", 9500); // connect to Consul on localhost
-//        AgentClient agentClient = consul.agentClient();
-//        agentClient.register(Integer.valueOf(System.getProperty("server.port")), 30L, serviceName, serviceId);
-//        agentClient.pass(serviceId);
+        final ConsulServiceDiscoveryBuilder consulServiceDiscoveryBuilder =
+                ConsulServiceDiscoveryBuilder.consulServiceDiscoveryBuilder();
+
+        clientAgent = consulServiceDiscoveryBuilder.setConsulPort(8500).build();
+
+        clientAgent.start();
+
+                /* Register the services. */
+        clientAgent.registerWithIdAndTimeToLive(
+                serviceName, serviceId,
+                Integer.valueOf(System.getProperty("server.port")), 100);
     }
 
     @RequestMapping(value = "/health",
@@ -59,9 +69,7 @@ public class PeopleController {
     public String stop1() {
         LOGGER.info("!!!!!!!!!!!!!! Stopping service discovery");
 
-//        Consul consul = Consul.newClient("localhost", 9500); // connect to Consul on localhost
-//        AgentClient agentClient = consul.agentClient();
-//        agentClient.deregister(serviceId);
+        clientAgent.stop();
 
         return "Stopped";
     }
