@@ -1,0 +1,18 @@
+{
+  "datacenter": "dc2",
+  "data_dir": "d:/Software/consul_cluster/consul2",
+  "log_level": "INFO",
+  "node_name": "server2",
+  "server": true,
+  "ports" : {
+
+    "dns" : -1,
+    "http" : 10500,
+    "rpc" : 10400,
+    "serf_lan" : 10301,
+    "serf_wan" : 10302,
+    "server" : 10300
+  },
+
+  "start_join" : ["127.0.0.1:9301", "127.0.0.1:11301"]
+}

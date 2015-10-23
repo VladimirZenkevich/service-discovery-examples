@@ -1,0 +1,1 @@
+consul agent -config-file=server2.json -bootstrap-expect 3

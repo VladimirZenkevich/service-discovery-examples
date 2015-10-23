@@ -1,0 +1,17 @@
+{
+  "datacenter": "dc2",
+  "data_dir": "d:/Software/consul_cluster/consulclient2",
+  "log_level": "INFO",
+  "node_name": "client2",
+  "server": false,
+  "ports" : {
+
+    "dns" : -1,
+    "http" : 7500,
+    "rpc" : 7400,
+    "serf_lan" : 7301,
+    "serf_wan" : 7302,
+    "server" : 7300
+  }
+  
+}

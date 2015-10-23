@@ -13,6 +13,7 @@
         <module>common</module>
         <module>consul-client</module>
         <module>qbit</module>
+        <module>consul-configuration</module>
     </modules>
 
     <properties>

@@ -1,0 +1,19 @@
+{
+  "datacenter": "dc2",
+  "data_dir": "d:/Software/consul_cluster/consul1",
+  "log_level": "INFO",
+  "node_name": "server1",
+  "server": true,
+  "ports" : {
+
+    "dns" : -1,
+    "http" : 9500,
+    "rpc" : 9400,
+    "serf_lan" : 9301,
+    "serf_wan" : 9302,
+    "server" : 9300
+  },
+  
+  "retry_join_wan" : ["172.16.16.57:9302"]
+  
+}
