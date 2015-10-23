@@ -19,13 +19,33 @@ public class ClientEndpoint {
         final ConsulServiceDiscoveryBuilder consulServiceDiscoveryBuilder =
                 ConsulServiceDiscoveryBuilder.consulServiceDiscoveryBuilder();
 
-        final ServiceDiscovery clientAgent = consulServiceDiscoveryBuilder.setConsulPort(8500).build();
+        final ServiceDiscovery clientAgent = consulServiceDiscoveryBuilder
+                .setDatacenter("dc2")
+                .build();
 
-//        clientAgent.start();
-
-
-//        clientAgent.checkInOk("MyService");
         List<EndpointDefinition> myService = clientAgent.loadServicesNow("MyService");
+        String response = "";
+        for (EndpointDefinition service : myService) {
+            response = response + service.getId() + " " + service.getHost() + " " + service.getPort() + " " + service.getHealthStatus().name() + ";\n";
+        }
+
+        return response;
+    }
+
+
+    @RequestMapping(value = "/check_dc1", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String check1() {
+
+        final ConsulServiceDiscoveryBuilder consulServiceDiscoveryBuilder =
+                ConsulServiceDiscoveryBuilder.consulServiceDiscoveryBuilder();
+
+        final ServiceDiscovery clientAgent = consulServiceDiscoveryBuilder
+                .setDatacenter("dc1")
+                .build();
+
+
+        List<EndpointDefinition> myService = clientAgent.loadServicesNow("myservice");
+
         String response = "";
         for (EndpointDefinition service : myService) {
             response = response + service.getId() + " " + service.getHost() + " " + service.getPort() + " " + service.getHealthStatus().name() + ";\n";

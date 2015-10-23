@@ -27,7 +27,7 @@ public class PeopleController {
     @PostConstruct
     public void init() throws Exception {
         final ConsulServiceDiscoveryBuilder consulServiceDiscoveryBuilder =
-                ConsulServiceDiscoveryBuilder.consulServiceDiscoveryBuilder();
+                ConsulServiceDiscoveryBuilder.consulServiceDiscoveryBuilder().setDatacenter("dc2");
 
         clientAgent = consulServiceDiscoveryBuilder.setConsulPort(8500).build();
 
@@ -36,7 +36,7 @@ public class PeopleController {
                 /* Register the services. */
         clientAgent.registerWithIdAndTimeToLive(
                 serviceName, serviceId,
-                Integer.valueOf(System.getProperty("server.port")), 100);
+                Integer.valueOf(System.getProperty("server.port")), 100000);
     }
 
     @RequestMapping(value = "/health",
